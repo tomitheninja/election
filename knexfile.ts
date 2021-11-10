@@ -2,11 +2,12 @@
 
 module.exports = {
   development: {
-    client: 'sqlite3',
+    client: 'mysql2',
     connection: {
-      filename: './dev.sqlite3',
+      database: 'election',
+      user: 'election',
+      password: 'election',
     },
-    useNullAsDefault: true,
   },
 
   staging: {
