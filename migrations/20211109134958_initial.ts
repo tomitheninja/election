@@ -15,7 +15,8 @@ module.exports.up = async function (knex: Knex) {
     })
     .createTable('election', (table) => {
       table.increments('id', { primaryKey: true });
-      table.string('name').notNullable();
+      table.string('name').unique().notNullable();
+      table.string('description', 1024).notNullable();
       table.datetime('start_date');
       table.datetime('end_date');
       table

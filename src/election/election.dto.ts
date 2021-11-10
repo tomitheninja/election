@@ -1,7 +1,9 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { User } from '../user/user.model';
+import { PaginationInput } from '../pagination.dto';
 
 @InputType()
-class ElectionFilter {
+class ElectionTimeFilter {
   @Field({ defaultValue: true })
   includePast: boolean;
 
@@ -19,16 +21,28 @@ export enum ElectionOrderBy {
 }
 
 @InputType()
-export class FindAllElectionInput {
-  @Field({ defaultValue: 0 })
-  start: number;
-
-  @Field({ defaultValue: 50 })
-  many: number;
-
+export class FindAllElectionInput extends PaginationInput {
   @Field({ defaultValue: ElectionOrderBy.NAME_ASC })
   order: ElectionOrderBy;
 
+  @Field({ defaultValue: { includePast: true, includeFuture: true } })
+  filter: ElectionTimeFilter;
+
+  @Field({ nullable: true, defaultValue: null })
+  organizerId: number;
+}
+
+@InputType()
+export class CreateElectionInput {
   @Field()
-  filter: ElectionFilter;
+  name: string;
+
+  @Field({ defaultValue: '' })
+  description: string;
+
+  @Field({ nullable: true })
+  start?: Date;
+
+  @Field({ nullable: true })
+  end?: Date;
 }

@@ -15,6 +15,8 @@ export class Election {
   @Field({ nullable: true })
   end: Date;
 
+  organizer_id: User['id'];
+
   @Field()
-  owner: User;
+  organizer: User;
 }

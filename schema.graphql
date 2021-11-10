@@ -26,7 +26,7 @@ type Election {
   name: String!
   start: DateTime
   end: DateTime
-  owner: User!
+  organizer: User!
 }
 
 type LoginResult {
@@ -38,12 +38,26 @@ type Query {
   me: UserWithCreds!
   listUsers(pagination: PaginationInput!): [User!]!
   findById(id: Float!): Election!
+  findElections(options: FindAllElectionInput!): [Election!]!
   login(data: LoginInput!): LoginResult!
 }
 
 input PaginationInput {
   offset: Int = 0
   limit: Int = 50
+}
+
+input FindAllElectionInput {
+  offset: Int = 0
+  limit: Int = 50
+  order: String = "NAME_ASC"
+  filter: ElectionTimeFilter = {includePast: true, includeFuture: true}
+  organizerId: Float = null
+}
+
+input ElectionTimeFilter {
+  includePast: Boolean = true
+  includeFuture: Boolean = true
 }
 
 input LoginInput {
@@ -53,6 +67,7 @@ input LoginInput {
 
 type Mutation {
   createUser(data: CreateUserInput!): User!
+  createElection(data: CreateElectionInput!): Election!
 }
 
 input CreateUserInput {
@@ -61,4 +76,11 @@ input CreateUserInput {
   firstname: String!
   lastname: String!
   birth: DateTime!
+}
+
+input CreateElectionInput {
+  name: String!
+  description: String = ""
+  start: DateTime
+  end: DateTime
 }
