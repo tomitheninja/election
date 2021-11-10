@@ -7,6 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 import { UserService } from '../user/user.service';
 import { LoginInput, LoginResult } from './auth.dto';
+import { JwtPayload } from './auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -23,6 +24,6 @@ export class AuthService {
       throw new UnauthorizedException('Wrong password');
     }
 
-    return { access_token: this.jwtService.sign({ u: user.id }) };
+    return { access_token: this.jwtService.sign({ u: user.id } as JwtPayload) };
   }
 }

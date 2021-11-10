@@ -3,7 +3,7 @@ import { User } from './user.model';
 import { UserService } from './user.service';
 import { CreateUserInput } from './user.dto';
 import { UseGuards } from '@nestjs/common';
-import { JwtGuard, Jwt } from '../auth/jwt-auth.guard';
+import { JwtGuard, Jwt, JwtUser } from '../auth/jwt-auth.guard';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -21,7 +21,7 @@ export class UserResolver {
 
   @UseGuards(JwtGuard)
   @Query(() => User)
-  async me(@Jwt() { id }) {
+  async me(@Jwt() { id }: JwtUser) {
     return this.userService.findById(id);
   }
 }

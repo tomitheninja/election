@@ -1,5 +1,6 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsEmail, MinLength } from 'class-validator';
+import { User } from '../user/user.model';
 
 @InputType()
 export class LoginInput {
@@ -16,4 +17,10 @@ export class LoginInput {
 export class LoginResult {
   @Field()
   access_token: string;
+}
+
+export interface JwtPayload {
+  u: User['id'];
+  iat?: number;
+  exp?: number;
 }
