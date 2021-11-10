@@ -1,8 +1,9 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import db from '../db';
-import { User } from './user.model';
+import { User, UserWithCreds } from './user.model';
 import { CreateUserInput } from './user.dto';
 import { hash } from 'bcrypt';
+import { PaginationInput } from 'src/pagination.dto';
 
 @Injectable()
 export class UserService {
@@ -20,11 +21,15 @@ export class UserService {
     }
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string): Promise<UserWithCreds | null> {
     return db('user').where('email', email).first();
   }
 
-  async findById(id: number): Promise<User | null> {
+  async findById(id: number): Promise<UserWithCreds | null> {
     return db('user').where('id', id).first();
+  }
+
+  async listAll({ offset, limit }: PaginationInput): Promise<User[]> {
+    return db('user').offset(offset).limit(limit);
   }
 }

@@ -9,7 +9,7 @@ import { AuthModule } from './auth/auth.module';
     GraphQLModule.forRoot({
       debug: true,
       playground: true,
-      autoSchemaFile: true,
+      autoSchemaFile: './schema.graphql',
     }),
     UserModule,
     ElectionModule,

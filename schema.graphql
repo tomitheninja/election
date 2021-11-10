@@ -1,0 +1,64 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  firstname: String!
+  lastname: String!
+}
+
+type UserWithCreds {
+  id: Int!
+  firstname: String!
+  lastname: String!
+  email: String!
+  birth: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Election {
+  id: Int!
+  name: String!
+  start: DateTime
+  end: DateTime
+  owner: User!
+}
+
+type LoginResult {
+  access_token: String!
+}
+
+type Query {
+  userById(id: Int!): User!
+  me: UserWithCreds!
+  listUsers(pagination: PaginationInput!): [User!]!
+  findById(id: Float!): Election!
+  login(data: LoginInput!): LoginResult!
+}
+
+input PaginationInput {
+  offset: Int = 0
+  limit: Int = 50
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  createUser(data: CreateUserInput!): User!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  firstname: String!
+  lastname: String!
+  birth: DateTime!
+}

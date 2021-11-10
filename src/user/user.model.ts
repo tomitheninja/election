@@ -5,17 +5,20 @@ export class User {
   @Field(() => Int)
   id: number;
 
+  @Field()
+  firstname: string;
+
+  @Field()
+  lastname: string;
+}
+
+@ObjectType()
+export class UserWithCreds extends User {
   password: string;
 
   @Field()
   email: string;
 
   @Field()
-  firstname: string;
-
-  @Field()
-  lastname: string;
-
-  @Field()
-  bdate: Date;
+  birth: Date;
 }
